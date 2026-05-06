@@ -259,10 +259,23 @@
         <field name="name">⚠️ อะไหล่สต็อกต่ำ</field>
         <field name="res_model">spare.part</field>
         <field name="view_mode">tree,kanban,form</field>
-        <field name="domain">[('stock_status', 'in', ['low_stock', 'out_of_stock'])]</field>
+        <field name="domain">[('stock_status', '=', 'low_stock')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 ✅ ไม่มีอะไหล่ที่สต็อกต่ำ
+            </p>
+        </field>
+    </record>
+
+    <!-- Out of Stock Action -->
+    <record id="spare_part_out_of_stock_action" model="ir.actions.act_window">
+        <field name="name">🔴 อะไหล่หมดสต็อก</field>
+        <field name="res_model">spare.part</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('stock_status', '=', 'out_of_stock')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                ✅ ไม่มีอะไหล่หมดสต็อก — เยี่ยมเลย!
             </p>
         </field>
     </record>

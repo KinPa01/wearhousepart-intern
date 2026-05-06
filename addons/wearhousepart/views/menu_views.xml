@@ -37,6 +37,12 @@
               action="spare_part_low_stock_action"
               sequence="2"/>
 
+    <menuitem id="spare_menu_part_out_of_stock"
+              name="🔴 อะไหล่หมดสต็อก"
+              parent="spare_menu_parts"
+              action="spare_part_out_of_stock_action"
+              sequence="3"/>
+
     <!-- การเคลื่อนย้าย -->
     <menuitem id="spare_menu_operations"
               name="🔄 การเคลื่อนย้าย"

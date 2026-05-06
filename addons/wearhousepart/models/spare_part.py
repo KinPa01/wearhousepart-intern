@@ -33,7 +33,7 @@ class SparePart(models.Model):
         string='จำนวนในสต็อก', compute='_compute_qty_on_hand',
         store=True, digits=(12, 2))
     min_qty = fields.Float(
-        string='จำนวนขั้นต่ำ', default=5.0, digits=(12, 2),
+        string='จำนวนขั้นต่ำ', default=5.0, digits=(12, 2),   ## น้อยกว่านี้จะแจ้งเตือนว่าสต็อกต่ำ   5
         help='แจ้งเตือนเมื่อสต็อกต่ำกว่าจำนวนนี้')
     qty_reserved = fields.Float(
         string='จำนวนจอง', digits=(12, 2), default=0)
