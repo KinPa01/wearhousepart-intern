@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================ -->
+    <!-- Dashboard Action (Summary View)              -->
+    <!-- ============================================ -->
+    <record id="spare_dashboard_action" model="ir.actions.act_window">
+        <field name="name">📊 ภาพรวมคลังอะไหล่</field>
+        <field name="res_model">spare.part</field>
+        <field name="view_mode">pivot,graph,tree</field>
+        <field name="context">{'search_default_group_category': 1}</field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Pivot View - Enhanced                        -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_pivot" model="ir.ui.view">
+        <field name="name">spare.part.pivot</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <pivot string="📊 สรุปคลังอะไหล่" display_quantity="true">
+                <field name="category_id" type="row"/>
+                <field name="stock_status" type="col"/>
+                <field name="qty_on_hand" type="measure"/>
+                <field name="price" type="measure"/>
+                <field name="min_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Graph View - Enhanced Colors                 -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_graph" model="ir.ui.view">
+        <field name="name">spare.part.graph</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <graph string="📈 กราฟคลังอะไหล่" type="bar" stacked="true">
+                <field name="category_id"/>
+                <field name="qty_on_hand" type="measure"/>
+                <field name="stock_status" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Additional Graph - Price Analysis            -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_graph_price" model="ir.ui.view">
+        <field name="name">spare.part.graph.price</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <graph string="💰 วิเคราะห์ราคา" type="pie">
+                <field name="category_id"/>
+                <field name="price" type="measure"/>
+            </graph>
+        </field>
+    </record>
+</odoo>

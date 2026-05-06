@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================ -->
+    <!-- Main Menu                                    -->
+    <!-- ============================================ -->
+    <menuitem id="spare_menu_root"
+              name="🏭 คลังอะไหล่"
+              web_icon="wearhousepart,static/description/icon.png"
+              sequence="1"/>
+
+    <!-- ============================================ -->
+    <!-- Sub Menus                                    -->
+    <!-- ============================================ -->
+    
+    <!-- ภาพรวม -->
+    <menuitem id="spare_menu_dashboard"
+              name="📊 ภาพรวม"
+              parent="spare_menu_root"
+              action="spare_dashboard_action"
+              sequence="1"/>
+
+    <!-- อะไหล่ -->
+    <menuitem id="spare_menu_parts"
+              name="📦 อะไหล่"
+              parent="spare_menu_root"
+              sequence="10"/>
+
+    <menuitem id="spare_menu_part_list"
+              name="📋 รายการอะไหล่"
+              parent="spare_menu_parts"
+              action="spare_part_action"
+              sequence="1"/>
+
+    <menuitem id="spare_menu_part_low_stock"
+              name="⚠️ อะไหล่สต็อกต่ำ"
+              parent="spare_menu_parts"
+              action="spare_part_low_stock_action"
+              sequence="2"/>
+
+    <!-- การเคลื่อนย้าย -->
+    <menuitem id="spare_menu_operations"
+              name="🔄 การเคลื่อนย้าย"
+              parent="spare_menu_root"
+              sequence="20"/>
+
+    <menuitem id="spare_menu_move_all"
+              name="📑 การเคลื่อนย้ายทั้งหมด"
+              parent="spare_menu_operations"
+              action="spare_stock_move_action"
+              sequence="1"/>
+
+    <menuitem id="spare_menu_move_in"
+              name="📥 รับเข้าสต็อก"
+              parent="spare_menu_operations"
+              action="spare_stock_move_in_action"
+              sequence="2"/>
+
+    <menuitem id="spare_menu_move_out"
+              name="📤 เบิกออกสต็อก"
+              parent="spare_menu_operations"
+              action="spare_stock_move_out_action"
+              sequence="3"/>
+
+    <!-- ตั้งค่า -->
+    <menuitem id="spare_menu_config"
+              name="⚙️ ตั้งค่า"
+              parent="spare_menu_root"
+              sequence="90"/>
+
+    <menuitem id="spare_menu_category"
+              name="📁 หมวดหมู่อะไหล่"
+              parent="spare_menu_config"
+              action="spare_category_action"
+              sequence="1"/>
+
+    <menuitem id="spare_menu_motorcycle"
+              name="🏍️ รุ่นมอเตอร์ไซค์"
+              parent="spare_menu_config"
+              action="spare_motorcycle_action"
+              sequence="2"/>
+
+</odoo>

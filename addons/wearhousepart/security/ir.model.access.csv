@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_spare_category_user,spare.category.user,model_spare_category,base.group_user,1,1,1,1
+access_spare_part_user,spare.part.user,model_spare_part,base.group_user,1,1,1,1
+access_spare_stock_move_user,spare.stock.move.user,model_spare_stock_move,base.group_user,1,1,1,1
+access_spare_motorcycle_user,spare.motorcycle.user,model_spare_motorcycle,base.group_user,1,1,1,1

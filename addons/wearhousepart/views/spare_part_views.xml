@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================ -->
+    <!-- Part Tree View - Enhanced Colors             -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_tree" model="ir.ui.view">
+        <field name="name">spare.part.tree</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <tree string="อะไหล่" decoration-danger="stock_status == 'out_of_stock'"
+                  decoration-warning="stock_status == 'low_stock'"
+                  decoration-success="stock_status == 'in_stock'"
+                  multi_edit="1">
+                <field name="code" readonly="1" string="🏷️ รหัส"/>
+                <field name="name" string="📦 ชื่ออะไหล่"/>
+                <field name="name_en" optional="show" string="🌐 Name (EN)"/>
+                <field name="category_id" string="📁 หมวดหมู่"/>
+                <field name="brand" optional="show"/>
+                <field name="price" widget="monetary" options="{'currency_id': 'THB'}" string="💰 ราคา"/>
+                <field name="qty_on_hand" string="📊 สต็อก"/>
+                <field name="min_qty" optional="hide"/>
+                <field name="stock_status" widget="badge"
+                       decoration-danger="stock_status == 'out_of_stock'"
+                       decoration-warning="stock_status == 'low_stock'"
+                       decoration-success="stock_status == 'in_stock'"/>
+                <field name="part_type" widget="badge"
+                       decoration-info="part_type == 'oem'"
+                       decoration-primary="part_type == 'aftermarket'"
+                       optional="show"/>
+                <field name="quality_brand" optional="hide"/>
+                <field name="warranty_months" optional="hide"/>
+                <field name="note" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Part Form View - Premium Design              -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_form" model="ir.ui.view">
+        <field name="name">spare.part.form</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <form string="ชิ้นส่วนอะไหล่">
+                <header>
+                    <field name="stock_status" widget="statusbar"
+                           statusbar_visible="in_stock,low_stock,out_of_stock"
+                           readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="action_view_moves" icon="fa-exchange">
+                            <field string="การเคลื่อนย้าย" name="move_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <field name="image" widget="image" class="oe_avatar" 
+                           options="{'preview_image': 'image'}"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="ชื่ออะไหล่ (ไทย)..."/>
+                        </h1>
+                        <h3>
+                            <field name="name_en" placeholder="Part Name (English)..."/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="📋 ข้อมูลทั่วไป">
+                            <field name="code"/>
+                            <field name="category_id"/>
+                            <field name="brand"/>
+                            <field name="part_type" widget="radio"/>
+                            <field name="quality_brand"/>
+                            <field name="warranty_months"/>
+                        </group>
+                        <group string="💰 ราคาและสต็อก">
+                            <field name="price"/>
+                            <field name="cost"/>
+                            <field name="qty_on_hand"/>
+                            <field name="min_qty"/>
+                            <field name="qty_reserved"/>
+                            <field name="stock_status" widget="badge"
+                                   decoration-danger="stock_status == 'out_of_stock'"
+                                   decoration-warning="stock_status == 'low_stock'"
+                                   decoration-success="stock_status == 'in_stock'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="🏍️ รุ่นรถที่ใช้ได้">
+                            <field name="motorcycle_ids" widget="many2many_tags"
+                                   options="{'color_field': 'id'}"/>
+                        </page>
+                        <page string="📜 ประวัติการเคลื่อนย้าย">
+                            <field name="stock_move_ids" readonly="1">
+                                <tree decoration-success="move_type == 'in'"
+                                      decoration-danger="move_type == 'out'">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="move_type" widget="badge"
+                                           decoration-success="move_type == 'in'"
+                                           decoration-danger="move_type == 'out'"/>
+                                    <field name="qty"/>
+                                    <field name="state" widget="badge"
+                                           decoration-info="state == 'draft'"
+                                           decoration-success="state == 'done'"
+                                           decoration-danger="state == 'cancel'"/>
+                                    <field name="user_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="📝 หมายเหตุ">
+                            <field name="note" placeholder="หมายเหตุเพิ่มเติม..."/>
+                        </page>
+                    </notebook>
+                    <field name="active" invisible="1"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Part Kanban View - Premium Design            -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_kanban" model="ir.ui.view">
+        <field name="name">spare.part.kanban</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <kanban class="wp_parts_kanban">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="price"/>
+                <field name="qty_on_hand"/>
+                <field name="stock_status"/>
+                <field name="part_type"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click wp_part_card #{record.stock_status.raw_value == 'in_stock' ? 'stock_ok' : record.stock_status.raw_value == 'low_stock' ? 'stock_low' : 'stock_out'}">
+                            <div class="d-flex">
+                                <div class="wp_part_img me-3">
+                                    <img t-att-src="kanban_image('spare.part', 'image', record.id.raw_value)"
+                                         t-att-alt="record.name.value"
+                                         style="width:80px;height:80px;object-fit:cover;border-radius:8px;"/>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <strong class="d-block mb-1" style="font-size:14px;color:#1e293b;">
+                                                <field name="name"/>
+                                            </strong>
+                                            <span style="font-size:11px;color:#94a3b8;font-weight:600;">
+                                                <i class="fa fa-barcode me-1"/><field name="code"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);color:#4338ca;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;">
+                                            <i class="fa fa-folder-open me-1"/><field name="category_id"/>
+                                        </span>
+                                        <t t-if="record.part_type.raw_value == 'oem'">
+                                            <span class="ms-1" style="background:linear-gradient(135deg,#6366f1,#818cf8);color:white;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">OEM</span>
+                                        </t>
+                                        <t t-if="record.part_type.raw_value == 'aftermarket'">
+                                            <span class="ms-1" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">AFT</span>
+                                        </t>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <strong style="font-size:15px;color:#4f46e5;">
+                                            <field name="price"/> ฿
+                                        </strong>
+                                        <span t-attf-class="badge rounded-pill #{record.stock_status.raw_value == 'in_stock' ? 'text-bg-success' : record.stock_status.raw_value == 'low_stock' ? 'text-bg-warning' : 'text-bg-danger'}"
+                                              style="font-size:11px;font-weight:700;">
+                                            <i t-attf-class="fa #{record.stock_status.raw_value == 'in_stock' ? 'fa-check-circle' : record.stock_status.raw_value == 'low_stock' ? 'fa-exclamation-triangle' : 'fa-times-circle'} me-1"/>
+                                            สต็อก: <field name="qty_on_hand"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Part Search View                             -->
+    <!-- ============================================ -->
+    <record id="spare_part_view_search" model="ir.ui.view">
+        <field name="name">spare.part.search</field>
+        <field name="model">spare.part</field>
+        <field name="arch" type="xml">
+            <search string="ค้นหาอะไหล่">
+                <field name="name" string="ชื่ออะไหล่" 
+                       filter_domain="['|', ('name', 'ilike', self), ('name_en', 'ilike', self)]"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="brand"/>
+                <separator/>
+                <filter string="🟢 มีสต็อก" name="in_stock" 
+                        domain="[('stock_status', '=', 'in_stock')]"/>
+                <filter string="🟡 สต็อกต่ำ" name="low_stock" 
+                        domain="[('stock_status', '=', 'low_stock')]"/>
+                <filter string="🔴 หมดสต็อก" name="out_of_stock" 
+                        domain="[('stock_status', '=', 'out_of_stock')]"/>
+                <separator/>
+                <filter string="🔵 OEM" name="oem" 
+                        domain="[('part_type', '=', 'oem')]"/>
+                <filter string="🟣 Aftermarket" name="aftermarket" 
+                        domain="[('part_type', '=', 'aftermarket')]"/>
+                <separator/>
+                <filter string="📦 Archived" name="inactive" 
+                        domain="[('active', '=', False)]"/>
+                <group expand="0" string="จัดกลุ่มตาม">
+                    <filter string="📁 หมวดหมู่" name="group_category" 
+                            context="{'group_by': 'category_id'}"/>
+                    <filter string="📊 สถานะสต็อก" name="group_status" 
+                            context="{'group_by': 'stock_status'}"/>
+                    <filter string="🏭 OEM/Aftermarket" name="group_type" 
+                            context="{'group_by': 'part_type'}"/>
+                    <filter string="🏢 ยี่ห้อ" name="group_brand" 
+                            context="{'group_by': 'brand'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Part Action                                  -->
+    <!-- ============================================ -->
+    <record id="spare_part_action" model="ir.actions.act_window">
+        <field name="name">อะไหล่</field>
+        <field name="res_model">spare.part</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="spare_part_view_search"/>
+        <field name="context">{'search_default_group_category': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                เพิ่มอะไหล่ใหม่
+            </p>
+            <p>
+                จัดการข้อมูลอะไหล่มอเตอร์ไซค์ของคุณ
+            </p>
+        </field>
+    </record>
+
+    <!-- Low Stock Action -->
+    <record id="spare_part_low_stock_action" model="ir.actions.act_window">
+        <field name="name">⚠️ อะไหล่สต็อกต่ำ</field>
+        <field name="res_model">spare.part</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('stock_status', 'in', ['low_stock', 'out_of_stock'])]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                ✅ ไม่มีอะไหล่ที่สต็อกต่ำ
+            </p>
+        </field>
+    </record>
+
+</odoo>
