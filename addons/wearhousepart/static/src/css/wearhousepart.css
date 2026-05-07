@@ -13,16 +13,16 @@
     --wp-danger: #ef4444;
     --wp-warning: #f97316;
     --wp-info: #3b82f6;
-    --wp-gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --wp-gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --wp-gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --wp-gradient-1: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    --wp-gradient-2: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+    --wp-gradient-3: linear-gradient(135deg, #f56565 0%, #feb2b2 100%);
     --wp-gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --wp-gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    --wp-gradient-6: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-    --wp-shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-    --wp-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --wp-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    --wp-shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    --wp-gradient-5: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
+    --wp-gradient-6: linear-gradient(135deg, #feb2b2 0%, #fff5f5 100%);
+    --wp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --wp-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --wp-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --wp-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     --wp-radius: 12px;
     --wp-radius-sm: 8px;
     --wp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -34,7 +34,7 @@
 
 .wp_dashboard_wrapper {
     padding: 20px;
-    background: linear-gradient(180deg, #f0f2f5 0%, #e8eaf0 100%);
+    background: linear-gradient(180deg, #fff5f5 0%, #fee2e2 100%);
     min-height: 100%;
 }
 
@@ -71,12 +71,29 @@
     box-shadow: var(--wp-shadow-xl);
 }
 
-.wp_stat_card.card_primary::before { background: var(--wp-gradient-1); }
-.wp_stat_card.card_success::before { background: var(--wp-gradient-4); }
-.wp_stat_card.card_warning::before { background: var(--wp-gradient-5); }
-.wp_stat_card.card_danger::before { background: var(--wp-gradient-2); }
-.wp_stat_card.card_info::before { background: var(--wp-gradient-3); }
-.wp_stat_card.card_accent::before { background: var(--wp-gradient-6); }
+.wp_stat_card.card_primary::before {
+    background: var(--wp-gradient-1);
+}
+
+.wp_stat_card.card_success::before {
+    background: var(--wp-gradient-4);
+}
+
+.wp_stat_card.card_warning::before {
+    background: var(--wp-gradient-5);
+}
+
+.wp_stat_card.card_danger::before {
+    background: var(--wp-gradient-2);
+}
+
+.wp_stat_card.card_info::before {
+    background: var(--wp-gradient-3);
+}
+
+.wp_stat_card.card_accent::before {
+    background: var(--wp-gradient-6);
+}
 
 .wp_stat_card .wp_card_icon {
     width: 52px;
@@ -90,12 +107,29 @@
     margin-bottom: 16px;
 }
 
-.wp_stat_card.card_primary .wp_card_icon { background: var(--wp-gradient-1); }
-.wp_stat_card.card_success .wp_card_icon { background: var(--wp-gradient-4); }
-.wp_stat_card.card_warning .wp_card_icon { background: var(--wp-gradient-5); }
-.wp_stat_card.card_danger .wp_card_icon { background: var(--wp-gradient-2); }
-.wp_stat_card.card_info .wp_card_icon { background: var(--wp-gradient-3); }
-.wp_stat_card.card_accent .wp_card_icon { background: var(--wp-gradient-6); }
+.wp_stat_card.card_primary .wp_card_icon {
+    background: var(--wp-gradient-1);
+}
+
+.wp_stat_card.card_success .wp_card_icon {
+    background: var(--wp-gradient-4);
+}
+
+.wp_stat_card.card_warning .wp_card_icon {
+    background: var(--wp-gradient-5);
+}
+
+.wp_stat_card.card_danger .wp_card_icon {
+    background: var(--wp-gradient-2);
+}
+
+.wp_stat_card.card_info .wp_card_icon {
+    background: var(--wp-gradient-3);
+}
+
+.wp_stat_card.card_accent .wp_card_icon {
+    background: var(--wp-gradient-6);
+}
 
 .wp_stat_card .wp_card_value {
     font-size: 32px;
@@ -120,7 +154,7 @@
 .o_kanban_view.wp_kanban_enhanced .o_kanban_record {
     border-radius: var(--wp-radius) !important;
     box-shadow: var(--wp-shadow-sm) !important;
-    border: 1px solid rgba(0,0,0,0.06) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
     transition: var(--wp-transition) !important;
     overflow: hidden;
 }
@@ -137,17 +171,17 @@
     box-shadow: var(--wp-shadow-sm) !important;
     transition: var(--wp-transition) !important;
     overflow: hidden;
-    border: 1px solid rgba(99, 102, 241, 0.08) !important;
+    border: 1px solid rgba(229, 62, 62, 0.08) !important;
 }
 
 .wp_moto_kanban .o_kanban_record:hover {
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15) !important;
+    box-shadow: 0 8px 30px rgba(229, 62, 62, 0.15) !important;
     transform: translateY(-4px);
-    border-color: rgba(99, 102, 241, 0.3) !important;
+    border-color: rgba(229, 62, 62, 0.3) !important;
 }
 
 .wp_moto_kanban .o_kanban_image {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
     border-radius: var(--wp-radius-sm);
     overflow: hidden;
 }
@@ -161,7 +195,7 @@
 }
 
 .wp_moto_card_header {
-    background: var(--wp-gradient-1);
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
     padding: 8px 12px;
     margin: -8px -8px 10px -8px;
 }
@@ -204,7 +238,7 @@
 }
 
 .o_list_view .o_data_row:hover {
-    background-color: rgba(99, 102, 241, 0.04) !important;
+    background-color: rgba(229, 62, 62, 0.04) !important;
 }
 
 /* ============================================ */
@@ -226,7 +260,7 @@
 }
 
 .o_form_view .oe_button_box .oe_stat_button:hover {
-    background-color: rgba(99, 102, 241, 0.06);
+    background-color: rgba(229, 62, 62, 0.06);
     transform: translateY(-1px);
 }
 
@@ -270,12 +304,19 @@
 }
 
 @keyframes pulse_danger {
-    0%, 100% { box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3); }
-    50% { box-shadow: 0 2px 12px rgba(239, 68, 68, 0.5); }
+
+    0%,
+    100% {
+        box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 2px 12px rgba(239, 68, 68, 0.5);
+    }
 }
 
 .wp_badge_oem {
-    background: linear-gradient(135deg, #6366f1, #818cf8) !important;
+    background: linear-gradient(135deg, #e53e3e, #fc8181) !important;
     color: white !important;
     border: none !important;
     padding: 4px 10px !important;
@@ -285,7 +326,7 @@
 }
 
 .wp_badge_aftermarket {
-    background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
+    background: linear-gradient(135deg, #c53030, #e53e3e) !important;
     color: white !important;
     border: none !important;
     padding: 4px 10px !important;
@@ -389,13 +430,13 @@
 }
 
 .wp_moto_card:hover {
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.18) !important;
+    box-shadow: 0 12px 40px rgba(229, 62, 62, 0.18) !important;
     transform: translateY(-4px);
 }
 
 .wp_moto_card .wp_moto_img_wrap {
     position: relative;
-    background: #f0f4ff;
+    background: #fff5f5;
     padding: 16px;
     display: flex;
     align-items: center;
@@ -435,7 +476,7 @@
 }
 
 .wp_moto_card .wp_cc_badge {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+    background: linear-gradient(135deg, #e53e3e, #c53030) !important;
     color: white;
     padding: 3px 10px;
     border-radius: 16px;
@@ -461,7 +502,7 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: linear-gradient(135deg, #06b6d4, #22d3ee);
+    background: linear-gradient(135deg, #e53e3e, #fc8181);
     color: white;
     padding: 3px 10px;
     border-radius: 16px;
@@ -474,12 +515,13 @@
 /* 📊 Graph/Pivot View - Color Enhancement      */
 /* ============================================ */
 
-.o_graph_view, .o_pivot_view {
+.o_graph_view,
+.o_pivot_view {
     background: #f8fafc;
 }
 
 .o_pivot_view table thead th {
-    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
+    background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%) !important;
     color: white !important;
     font-weight: 600 !important;
     text-transform: uppercase;
@@ -489,8 +531,8 @@
 
 .o_pivot_view table .o_pivot_header_cell_closed,
 .o_pivot_view table .o_pivot_header_cell_opened {
-    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%) !important;
-    color: #4338ca !important;
+    background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%) !important;
+    color: #c53030 !important;
     font-weight: 600 !important;
 }
 
@@ -519,8 +561,15 @@
 }
 
 @keyframes border_pulse {
-    0%, 100% { border-left-color: var(--wp-danger) !important; }
-    50% { border-left-color: rgba(239, 68, 68, 0.4) !important; }
+
+    0%,
+    100% {
+        border-left-color: var(--wp-danger) !important;
+    }
+
+    50% {
+        border-left-color: rgba(239, 68, 68, 0.4) !important;
+    }
 }
 
 .wp_part_card:hover {
@@ -532,7 +581,7 @@
     width: 80px;
     height: 80px;
     border-radius: var(--wp-radius-sm);
-    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    background: linear-gradient(135deg, #fff5f5, #fee2e2);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -573,6 +622,7 @@
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -584,8 +634,13 @@
 /* ============================================ */
 
 @keyframes shimmer {
-    0% { background-position: -200px 0; }
-    100% { background-position: 200px 0; }
+    0% {
+        background-position: -200px 0;
+    }
+
+    100% {
+        background-position: 200px 0;
+    }
 }
 
 .wp_shimmer {
@@ -606,6 +661,7 @@
         opacity: 0;
         transform: translateY(8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -621,6 +677,7 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
+
     .wp_stat_card .wp_card_value {
         font-size: 24px;
     }
@@ -630,4 +687,60 @@
     .wp_stat_cards {
         grid-template-columns: 1fr;
     }
+}
+
+/* ============================================ */
+/* 🔴 Odoo System - Red & White Theme Override  */
+/* ============================================ */
+
+:root {
+    --o-brand-odoo: #e53e3e;
+    --o-brand-primary: #e53e3e;
+}
+
+/* Navbar - Dark Red */
+.o_main_navbar {
+    background-color: #b91c1c !important;
+    background: linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
+}
+
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .o_menu_entry,
+.o_main_navbar>a,
+.o_main_navbar>button {
+    color: #ffffff !important;
+}
+
+.o_main_navbar .o_menu_entry:hover,
+.o_main_navbar>a:hover,
+.o_main_navbar>button:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Primary Buttons - Red */
+.btn-primary {
+    background-color: #e53e3e !important;
+    border-color: #e53e3e !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #c53030 !important;
+    border-color: #c53030 !important;
+    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.35) !important;
+}
+
+/* Action manager header accent */
+.o_control_panel {
+    border-bottom: 2px solid #fee2e2;
+}
+
+/* Selection highlight */
+.o_list_view .o_data_row.o_data_row_selected {
+    background-color: rgba(229, 62, 62, 0.08) !important;
+}
+
+/* Breadcrumb accent */
+.o_control_panel .breadcrumb-item.active {
+    color: #c53030;
 }
