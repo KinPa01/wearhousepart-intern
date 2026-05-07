@@ -89,6 +89,10 @@ class SpareStockMove(models.Model):
         for move in self:
             if move.state == 'done':
                 raise UserError('ไม่สามารถยกเลิกเอกสารที่ยืนยันแล้วได้')
+            # บันทึกจำนวนก่อน/หลัง ตอนยกเลิก
+            current_stock = move.part_id.qty_on_hand
+            move.qty_before = current_stock
+            move.qty_after = current_stock
             move.state = 'cancel'
 
     def action_draft(self):
