@@ -4,9 +4,9 @@
 
 /* --- CSS Variables / Design Tokens --- */
 :root {
-    --wp-primary: #6366f1;
-    --wp-primary-dark: #4f46e5;
-    --wp-primary-light: #818cf8;
+    --wp-primary: #dc2626;
+    --wp-primary-dark: #b91c1c;
+    --wp-primary-light: #f87171;
     --wp-secondary: #06b6d4;
     --wp-accent: #f59e0b;
     --wp-success: #10b981;
@@ -687,60 +687,4 @@
     .wp_stat_cards {
         grid-template-columns: 1fr;
     }
-}
-
-/* ============================================ */
-/* 🔴 Odoo System - Red & White Theme Override  */
-/* ============================================ */
-
-:root {
-    --o-brand-odoo: #e53e3e;
-    --o-brand-primary: #e53e3e;
-}
-
-/* Navbar - Dark Red */
-.o_main_navbar {
-    background-color: #b91c1c !important;
-    background: linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
-}
-
-.o_main_navbar .o_menu_brand,
-.o_main_navbar .o_menu_entry,
-.o_main_navbar>a,
-.o_main_navbar>button {
-    color: #ffffff !important;
-}
-
-.o_main_navbar .o_menu_entry:hover,
-.o_main_navbar>a:hover,
-.o_main_navbar>button:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-/* Primary Buttons - Red */
-.btn-primary {
-    background-color: #e53e3e !important;
-    border-color: #e53e3e !important;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: #c53030 !important;
-    border-color: #c53030 !important;
-    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.35) !important;
-}
-
-/* Action manager header accent */
-.o_control_panel {
-    border-bottom: 2px solid #fee2e2;
-}
-
-/* Selection highlight */
-.o_list_view .o_data_row.o_data_row_selected {
-    background-color: rgba(229, 62, 62, 0.08) !important;
-}
-
-/* Breadcrumb accent */
-.o_control_panel .breadcrumb-item.active {
-    color: #c53030;
 }

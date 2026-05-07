@@ -31,6 +31,9 @@
         'demo/spare_part_demo.xml',
     ],
     'assets': {
+        'web._assets_primary_variables': [
+            ('prepend', 'wearhousepart/static/src/scss/theme_override.scss'),
+        ],
         'web.assets_backend': [
             'wearhousepart/static/src/css/wearhousepart.css',
         ],
