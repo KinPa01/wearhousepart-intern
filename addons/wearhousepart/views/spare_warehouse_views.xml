@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================ -->
+    <!-- Warehouse Tree View -->
+    <!-- ============================================ -->
+    <record id="spare_warehouse_view_tree" model="ir.ui.view">
+        <field name="name">spare.warehouse.tree</field>
+        <field name="model">spare.warehouse</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="location_count"/>
+                <field name="active" column_invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Warehouse Form View -->
+    <!-- ============================================ -->
+    <record id="spare_warehouse_view_form" model="ir.ui.view">
+        <field name="name">spare.warehouse.form</field>
+        <field name="model">spare.warehouse</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_locations" type="object"
+                                class="oe_stat_button" icon="fa-map-marker">
+                            <field name="location_count" widget="statinfo"
+                                   string="ตำแหน่ง"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="manager_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Warehouse Action -->
+    <!-- ============================================ -->
+    <record id="spare_warehouse_action" model="ir.actions.act_window">
+        <field name="name">คลังสินค้า</field>
+        <field name="res_model">spare.warehouse</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                สร้างคลังสินค้าแรกของคุณ
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -43,29 +43,36 @@
               action="spare_part_out_of_stock_action"
               sequence="3"/>
 
-    <!-- การเคลื่อนย้าย -->
-    <menuitem id="spare_menu_operations"
-              name="🔄 การเคลื่อนย้าย"
+    <!-- จัดซื้อ (PO) -->
+    <menuitem id="spare_menu_purchase"
+              name="🛒 จัดซื้อ"
               parent="spare_menu_root"
-              sequence="20"/>
+              sequence="15"/>
 
-    <menuitem id="spare_menu_move_all"
-              name="📑 การเคลื่อนย้ายทั้งหมด"
-              parent="spare_menu_operations"
-              action="spare_stock_move_action"
+    <menuitem id="spare_menu_purchase_order"
+              name="📋 ใบสั่งซื้อ (PO)"
+              parent="spare_menu_purchase"
+              action="spare_purchase_order_action"
               sequence="1"/>
 
-    <menuitem id="spare_menu_move_in"
-              name="📥 รับเข้าสต็อก"
-              parent="spare_menu_operations"
-              action="spare_stock_move_in_action"
-              sequence="2"/>
+    <!-- เบิกอะไหล่ -->
+    <menuitem id="spare_menu_request"
+              name="📝 เบิกอะไหล่"
+              parent="spare_menu_root"
+              sequence="18"/>
 
-    <menuitem id="spare_menu_move_out"
-              name="📤 เบิกออกสต็อก"
-              parent="spare_menu_operations"
-              action="spare_stock_move_out_action"
-              sequence="3"/>
+    <menuitem id="spare_menu_request_list"
+              name="📋 ใบขอเบิก"
+              parent="spare_menu_request"
+              action="spare_request_action"
+              sequence="1"/>
+
+    <!-- ประวัติสต็อก (Log) -->
+    <menuitem id="spare_menu_stock_log"
+              name="📜 ประวัติสต็อก"
+              parent="spare_menu_root"
+              action="spare_stock_move_action"
+              sequence="20"/>
 
     <!-- ตั้งค่า -->
     <menuitem id="spare_menu_config"
@@ -84,5 +91,17 @@
               parent="spare_menu_config"
               action="spare_motorcycle_action"
               sequence="2"/>
+
+    <menuitem id="spare_menu_warehouse"
+              name="🏭 คลังสินค้า"
+              parent="spare_menu_config"
+              action="spare_warehouse_action"
+              sequence="3"/>
+
+    <menuitem id="spare_menu_location"
+              name="📍 ตำแหน่งจัดเก็บ"
+              parent="spare_menu_config"
+              action="spare_location_action"
+              sequence="4"/>
 
 </odoo>

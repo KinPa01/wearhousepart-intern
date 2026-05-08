@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================ -->
+    <!-- Purchase Order Tree View -->
+    <!-- ============================================ -->
+    <record id="spare_purchase_order_view_tree" model="ir.ui.view">
+        <field name="name">spare.purchase.order.tree</field>
+        <field name="model">spare.purchase.order</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'"
+                  decoration-warning="state == 'confirmed'"
+                  decoration-success="state == 'done'"
+                  decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="supplier"/>
+                <field name="date_order"/>
+                <field name="date_planned" optional="show"/>
+                <field name="warehouse_id"/>
+                <field name="line_count"/>
+                <field name="total_amount" sum="ยอดรวมทั้งหมด"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="priority" widget="priority"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'confirmed'"
+                       decoration-primary="state == 'received'"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancel'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Purchase Order Form View -->
+    <!-- ============================================ -->
+    <record id="spare_purchase_order_view_form" model="ir.ui.view">
+        <field name="name">spare.purchase.order.form</field>
+        <field name="model">spare.purchase.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object"
+                            string="ยืนยัน PO" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_receive" type="object"
+                            string="รับของ (Receive)" class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_putaway" type="object"
+                            string="จัดเก็บ (Putaway)" class="btn-primary"
+                            invisible="state != 'received'"/>
+                    <button name="action_cancel" type="object"
+                            string="ยกเลิก"
+                            invisible="state in ('done', 'cancel')"/>
+                    <button name="action_draft" type="object"
+                            string="กลับเป็นร่าง"
+                            invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,received,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-list"
+                                name="action_view_lines" type="object"
+                                invisible="1">
+                            <field name="line_count" widget="statinfo"
+                                   string="รายการ"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="supplier"/>
+                            <field name="supplier_ref"/>
+                            <field name="warehouse_id"/>
+                        </group>
+                        <group>
+                            <field name="date_order"/>
+                            <field name="date_planned"/>
+                            <field name="date_received"/>
+                            <field name="user_id"
+                                   widget="many2one_avatar_user"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="รายการสั่งซื้อ" name="lines">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence"
+                                           widget="handle"/>
+                                    <field name="part_id"/>
+                                    <field name="category_id"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="subtotal"/>
+                                    <field name="dest_location_id"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="total_amount"
+                                       class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="หมายเหตุ" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Purchase Order Search View -->
+    <!-- ============================================ -->
+    <record id="spare_purchase_order_view_search" model="ir.ui.view">
+        <field name="name">spare.purchase.order.search</field>
+        <field name="model">spare.purchase.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="supplier"/>
+                <field name="warehouse_id"/>
+                <filter string="ร่าง" name="draft"
+                        domain="[('state','=','draft')]"/>
+                <filter string="ยืนยันแล้ว" name="confirmed"
+                        domain="[('state','=','confirmed')]"/>
+                <filter string="รับของแล้ว" name="received"
+                        domain="[('state','=','received')]"/>
+                <filter string="จัดเก็บแล้ว" name="done"
+                        domain="[('state','=','done')]"/>
+                <separator/>
+                <filter string="ด่วน" name="urgent"
+                        domain="[('priority','in',('1','2'))]"/>
+                <group expand="0" string="จัดกลุ่มตาม">
+                    <filter string="สถานะ" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="ผู้จำหน่าย" name="group_supplier"
+                            context="{'group_by': 'supplier'}"/>
+                    <filter string="คลัง" name="group_warehouse"
+                            context="{'group_by': 'warehouse_id'}"/>
+                    <filter string="เดือน" name="group_month"
+                            context="{'group_by': 'date_order:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================ -->
+    <!-- Purchase Order Action -->
+    <!-- ============================================ -->
+    <record id="spare_purchase_order_action" model="ir.actions.act_window">
+        <field name="name">ใบสั่งซื้อ (PO)</field>
+        <field name="res_model">spare.purchase.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_state': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                สร้างใบสั่งซื้ออะไหล่ใบแรก
+            </p>
+            <p>สร้าง PO → ยืนยัน → รับของ → จัดเก็บ (Putaway)</p>
+        </field>
+    </record>
+</odoo>

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- ============================================ -->
-    <!-- Stock Move Tree View - Enhanced Colors       -->
+    <!-- Stock Move Log - Tree View (Read-only)      -->
     <!-- ============================================ -->
     <record id="spare_stock_move_view_tree" model="ir.ui.view">
         <field name="name">spare.stock.move.tree</field>
         <field name="model">spare.stock.move</field>
         <field name="arch" type="xml">
-            <tree string="การเคลื่อนย้ายสต็อก"
+            <tree string="ประวัติการเคลื่อนย้ายสต็อก"
                   decoration-success="move_type == 'in' and state == 'done'"
                   decoration-danger="move_type == 'out' and state == 'done'"
-                  decoration-muted="state == 'cancel'">
+                  decoration-muted="state == 'cancel'"
+                  create="false" edit="false" delete="false">
                 <field name="name" string="📄 เลขที่"/>
                 <field name="date" string="📅 วันที่"/>
                 <field name="part_id" string="🔧 อะไหล่"/>
@@ -21,6 +22,8 @@
                 <field name="qty" string="📊 จำนวน"/>
                 <field name="qty_before" optional="show" string="ก่อน"/>
                 <field name="qty_after" optional="show" string="หลัง"/>
+                <field name="requester_name" string="👤 ผู้เบิก/ผู้จำหน่าย"/>
+                <field name="origin_document" string="📎 เอกสารต้นทาง" optional="show"/>
                 <field name="user_id" widget="many2one_avatar_user" string="👤 ผู้ดำเนินการ"/>
                 <field name="state" widget="badge"
                        decoration-info="state == 'draft'"
@@ -31,13 +34,13 @@
     </record>
 
     <!-- ============================================ -->
-    <!-- Stock Move Form View - Enhanced              -->
+    <!-- Stock Move Form View (Read-only log)        -->
     <!-- ============================================ -->
     <record id="spare_stock_move_view_form" model="ir.ui.view">
         <field name="name">spare.stock.move.form</field>
         <field name="model">spare.stock.move</field>
         <field name="arch" type="xml">
-            <form string="การเคลื่อนย้ายสต็อก">
+            <form string="รายละเอียดการเคลื่อนย้าย" create="false">
                 <header>
                     <button name="action_confirm" type="object" string="✅ ยืนยัน"
                             class="btn-primary" invisible="state != 'draft'"/>
@@ -62,7 +65,11 @@
                         <group string="📋 ข้อมูลเพิ่มเติม">
                             <field name="date" readonly="state != 'draft'"/>
                             <field name="user_id"/>
+                            <field name="requester_name"/>
+                            <field name="origin_document"/>
                             <field name="reference"/>
+                            <field name="purchase_order_id" invisible="not purchase_order_id"/>
+                            <field name="request_id" invisible="not request_id"/>
                             <field name="qty_before" invisible="state != 'done'"/>
                             <field name="qty_after" invisible="state != 'done'"/>
                         </group>
@@ -86,10 +93,11 @@
         <field name="name">spare.stock.move.search</field>
         <field name="model">spare.stock.move</field>
         <field name="arch" type="xml">
-            <search string="ค้นหาการเคลื่อนย้าย">
+            <search string="ค้นหาประวัติ">
                 <field name="name"/>
                 <field name="part_id"/>
                 <field name="category_id"/>
+                <field name="requester_name"/>
                 <field name="user_id"/>
                 <separator/>
                 <filter string="🟢 รับเข้า" name="type_in" domain="[('move_type', '=', 'in')]"/>
@@ -98,11 +106,15 @@
                 <filter string="📝 ร่าง" name="draft" domain="[('state', '=', 'draft')]"/>
                 <filter string="✅ เสร็จสิ้น" name="done" domain="[('state', '=', 'done')]"/>
                 <filter string="❌ ยกเลิก" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                <separator/>
+                <filter string="📎 จาก PO" name="from_po" domain="[('purchase_order_id', '!=', False)]"/>
+                <filter string="📎 จากใบเบิก" name="from_request" domain="[('request_id', '!=', False)]"/>
                 <group expand="0" string="จัดกลุ่มตาม">
                     <filter string="🔧 อะไหล่" name="group_part" context="{'group_by': 'part_id'}"/>
                     <filter string="📁 หมวดหมู่" name="group_category" context="{'group_by': 'category_id'}"/>
                     <filter string="📊 ประเภท" name="group_type" context="{'group_by': 'move_type'}"/>
                     <filter string="🏷️ สถานะ" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="👤 ผู้เบิก" name="group_requester" context="{'group_by': 'requester_name'}"/>
                     <filter string="📅 วันที่" name="group_date" context="{'group_by': 'date:month'}"/>
                 </group>
             </search>
@@ -110,32 +122,17 @@
     </record>
 
     <!-- ============================================ -->
-    <!-- Stock Move Actions                           -->
+    <!-- Stock Move Action (Log only - no create)    -->
     <!-- ============================================ -->
     <record id="spare_stock_move_action" model="ir.actions.act_window">
-        <field name="name">การเคลื่อนย้ายสต็อก</field>
+        <field name="name">📜 ประวัติสต็อก</field>
         <field name="res_model">spare.stock.move</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="spare_stock_move_view_search"/>
+        <field name="context">{'create': False}</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">บันทึกการเคลื่อนย้ายสต็อกใหม่</p>
-            <p>จัดการการรับเข้าและเบิกออกอะไหล่ในคลัง</p>
+            <p class="o_view_nocontent_smiling_face">ยังไม่มีประวัติการเคลื่อนย้าย</p>
+            <p>ประวัติจะถูกสร้างอัตโนมัติเมื่อรับของจาก PO หรือเบิกผ่านใบขอเบิก</p>
         </field>
-    </record>
-
-    <record id="spare_stock_move_in_action" model="ir.actions.act_window">
-        <field name="name">📥 รับเข้าสต็อก</field>
-        <field name="res_model">spare.stock.move</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('move_type', '=', 'in')]</field>
-        <field name="context">{'default_move_type': 'in'}</field>
-    </record>
-
-    <record id="spare_stock_move_out_action" model="ir.actions.act_window">
-        <field name="name">📤 เบิกออกสต็อก</field>
-        <field name="res_model">spare.stock.move</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('move_type', '=', 'out')]</field>
-        <field name="context">{'default_move_type': 'out'}</field>
     </record>
 </odoo>

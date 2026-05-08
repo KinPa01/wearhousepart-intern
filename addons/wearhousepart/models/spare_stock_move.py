@@ -38,11 +38,43 @@ class SpareStockMove(models.Model):
     reference = fields.Char(string='อ้างอิง')
     note = fields.Text(string='หมายเหตุ')
 
+
+
+    # เชื่อมกับ PO / ใบเบิก
+    purchase_order_id = fields.Many2one(
+        'spare.purchase.order', string='ใบสั่งซื้อ',
+        readonly=True, index=True)
+    request_id = fields.Many2one(
+        'spare.request', string='ใบขอเบิก',
+        readonly=True, index=True)
+
+    # ข้อมูลผู้เกี่ยวข้อง (สำหรับ Log)
+    requester_name = fields.Char(
+        string='ผู้ขอเบิก',
+        compute='_compute_origin_info', store=True)
+    origin_document = fields.Char(
+        string='เอกสารต้นทาง',
+        compute='_compute_origin_info', store=True)
+
     # ข้อมูลเพิ่มเติม
     qty_before = fields.Float(
         string='จำนวนก่อน', digits=(12, 2), readonly=True)
     qty_after = fields.Float(
         string='จำนวนหลัง', digits=(12, 2), readonly=True)
+
+    @api.depends('request_id', 'request_id.requester_id',
+                 'purchase_order_id', 'purchase_order_id.supplier')
+    def _compute_origin_info(self):
+        for move in self:
+            if move.request_id:
+                move.requester_name = move.request_id.requester_id.name or ''
+                move.origin_document = 'ใบเบิก: %s' % move.request_id.name
+            elif move.purchase_order_id:
+                move.requester_name = move.purchase_order_id.supplier or ''
+                move.origin_document = 'PO: %s' % move.purchase_order_id.name
+            else:
+                move.requester_name = move.user_id.name or ''
+                move.origin_document = ''
 
     @api.model_create_multi
     def create(self, vals_list):

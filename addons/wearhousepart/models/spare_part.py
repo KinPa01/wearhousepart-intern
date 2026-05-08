@@ -26,6 +26,15 @@ class SparePart(models.Model):
         help='เลือกรุ่นรถที่สามารถใช้อะไหล่นี้ได้')
     brand = fields.Char(string='ยี่ห้อ', default='Honda')
     
+    # ตำแหน่งจัดเก็บ
+    location_id = fields.Many2one(
+        'spare.location', string='ตำแหน่งจัดเก็บ',
+        tracking=True, index=True,
+        help='ตำแหน่งหลักที่จัดเก็บอะไหล่นี้ในคลัง')
+    location_code = fields.Char(
+        related='location_id.complete_code',
+        string='รหัสตำแหน่ง', store=True, readonly=True)
+    
     # ราคาและสต็อก
     price = fields.Float(string='ราคา (บาท)', digits=(12, 2), tracking=True)
     cost = fields.Float(string='ราคาทุน (บาท)', digits=(12, 2))
@@ -35,8 +44,7 @@ class SparePart(models.Model):
     min_qty = fields.Float(
         string='จำนวนขั้นต่ำ', default=5.0, digits=(12, 2),   ## น้อยกว่านี้จะแจ้งเตือนว่าสต็อกต่ำ   5
         help='แจ้งเตือนเมื่อสต็อกต่ำกว่าจำนวนนี้')
-    qty_reserved = fields.Float(
-        string='จำนวนจอง', digits=(12, 2), default=0)
+
     
     # สถานะ
     stock_status = fields.Selection([
@@ -50,8 +58,7 @@ class SparePart(models.Model):
         ('oem', 'OEM'),
         ('aftermarket', 'Aftermarket'),
     ], string='OEM/Aftermarket', default='oem', tracking=True)
-    quality_brand = fields.Char(string='คุณภาพ/แบรนด์')
-    warranty_months = fields.Integer(string='ชุดประกัน (เดือน)', default=0)
+
     
     # อื่นๆ
     image = fields.Binary(string='รูปภาพ', attachment=True)

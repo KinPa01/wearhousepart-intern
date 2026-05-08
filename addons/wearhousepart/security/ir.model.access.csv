@@ -3,3 +3,9 @@ access_spare_category_user,spare.category.user,model_spare_category,base.group_u
 access_spare_part_user,spare.part.user,model_spare_part,base.group_user,1,1,1,1
 access_spare_stock_move_user,spare.stock.move.user,model_spare_stock_move,base.group_user,1,1,1,1
 access_spare_motorcycle_user,spare.motorcycle.user,model_spare_motorcycle,base.group_user,1,1,1,1
+access_spare_warehouse_user,spare.warehouse.user,model_spare_warehouse,base.group_user,1,1,1,1
+access_spare_location_user,spare.location.user,model_spare_location,base.group_user,1,1,1,1
+access_spare_purchase_order_user,spare.purchase.order.user,model_spare_purchase_order,base.group_user,1,1,1,1
+access_spare_purchase_order_line_user,spare.purchase.order.line.user,model_spare_purchase_order_line,base.group_user,1,1,1,1
+access_spare_request_user,spare.request.user,model_spare_request,base.group_user,1,1,1,1
+access_spare_request_line_user,spare.request.line.user,model_spare_request_line,base.group_user,1,1,1,1
